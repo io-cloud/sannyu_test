@@ -46,13 +46,13 @@
 
 ### プログラミング
 
-9. 以下の条件を満たすスクリプトを作成しなさい
+9. 以下の条件を満たすスクリプト `chk_zorome.<拡張子>` を作成しなさい
 - 条件
   - 標準入力からカンマ区切りでランダムな文字列or数値を受け取る
   - 受け取った値が、3桁の数字でない場合は、"unmach pattern: <受け取った値>"を表示する
   - 受け取った値が、3桁のぞろ目の数字であった場合は、"zorome: <受け取った値>"を表示する
   - 受け取った値が、上記に当てはまらない場合は、そのまま受け取った値を表示する
-  - スクリプトの言語は、なんでも良い
+  - スクリプトの言語はお好きにどうぞ
 - 例
   - 標準入力で受け取る値
   
@@ -70,70 +70,9 @@
     321
     ```
 
-10. 以下のコードを読んだ上で、次の問いに答えなさい
-
- - コード
- 
-  ```
-  #!/bin/bash
- 
-function help {
-    cat <<- EOF
-    overview：backup or restore
-    usage：bak.sh [-h|-b|-r] filename ...
-    option：
-      -h  this message
-      -b  backup
-      -r  restore
-    EOF
-    exit 1
-}
- 
-if [ "$#" -lt 1 ]; then
-     help
-fi
- 
-if [ "$1" = "-h" ]; then
-    help
-elif [ "$1" = "-b" ]; then
-    IS_RESTORE=0
-    shift
-elif [ "$1" = "-r" ]; then
-    IS_RESTORE=1
-    shift
-fi
- 
-for file in $*
-do
-    if [ "$IS_RESTORE" -eq 0 ]; then
-        if [ ! -e "${file}.bak" ]; then
-            echo "ERROR: A file doesn't exist. ${file}.bak"
-            continue
-        fi
-        SRC=${file}.bak
-        DST=${file}
-    else
-        if [ ! -e "${file}" ]; then
-            echo "ERROR: A file doesn't exist. ${file}"
-            continue
-        fi
-        SRC=${file}
-        DST=${file}.bak
-    fi
-     
-    echo -n "$SRC --> $DST  ...  "
-    cp $SRC $DST &> /dev/null
- 
-    if [ "$?" -eq 0 ]
-    then
-        echo "OK"
-    else
-        echo "ERROR: It can't be copied."
-    fi
-done
-  ```
+10. リポジトリ内、bak.shのコードを読んだ上で、次の問いに答えなさい
   
-  a. 上記スクリプトは、一部のコードが誤っており、実行すると意図した通りに動作しない。誤っているコードを修正しなさい
+  a. bak.shは、一部のコードが誤っており、実行すると意図した通りに動作しない。誤っているコードを修正しなさい
   
   b. 第一引数に、"-h", "-b", "-r"以外が指定された場合に、エラーメッセージを表示してスクリプトを終了させる処理を実装しなさい
   
