@@ -8,24 +8,27 @@ function help {
       -h  this message
       -b  backup
       -r  restore
-    EOF
+EOF
     exit 1
 }
- 
-if [ "$#" -lt 1 ]; then
-     help
-fi
- 
-if [ "$1" = "-h" ]; then
-    help
-elif [ "$1" = "-b" ]; then
-    IS_RESTORE=0
-    shift
-elif [ "$1" = "-r" ]; then
-    IS_RESTORE=1
-    shift
-fi
- 
+
+while getopts brh OPT
+do
+    case $OPT in
+        b)
+          IS_RESTORE=0
+            ;;
+        r) 
+          IS_RESTORE=1
+            ;;
+        h)
+          help
+            ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
 for file in $*
 do
     if [ "$IS_RESTORE" -eq 0 ]; then
@@ -46,8 +49,8 @@ do
      
     echo -n "$SRC --> $DST  ...  "
     cp $SRC $DST &> /dev/null
- 
     if [ "$?" -eq 0 ]
+
     then
         echo "OK"
     else
