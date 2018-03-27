@@ -29,6 +29,10 @@ done
 
 shift $((OPTIND - 1))
 
+if [ -z "$IS_RESTORE" ]; then
+    exit 1
+fi
+
 for file in $*
 do
     if [ "$IS_RESTORE" -eq 1 ]; then
