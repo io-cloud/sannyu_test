@@ -24,6 +24,8 @@ do
         h)
           help
             ;;
+        *)
+          exit 1
     esac
 done
 
