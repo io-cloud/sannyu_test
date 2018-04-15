@@ -33,3 +33,9 @@ file name:answer1-8.md
 
 grep -E '26/Feb/2018:20|26/Feb/2018:21|26/Feb/2018:22' dir_3/access_log | awk -F ' ' '{print $1}' | sort | uniq -c
 </pre>
+
+プログラミング  
+※下記ファイル参照  
+chk_zorome.go  
+bak_tereko.sh  
+bak_last.sh  
