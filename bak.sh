@@ -31,17 +31,16 @@ shift $((OPTIND - 1))
 
 for file in $*
 do
-##"-eq 0"→"-eq 1"
-    if [ "$IS_RESTORE" -eq 1 ]; then
-        if [ ! -e "${file}.bak" ]; then
-            echo "ERROR: A file doesn't exist. ${file}.bak"
+    if [ "$IS_RESTORE" -eq 0 ]; then
+        if [ ! -e "${file}" ]; then
+            echo "ERROR: A file doesn't exist. ${file}"
             continue
         fi
         SRC=${file}.bak
         DST=${file}
     else
-        if [ ! -e "${file}" ]; then
-            echo "ERROR: A file doesn't exist. ${file}"
+        if [ ! -e "${file}.bak" ]; then
+            echo "ERROR: A file doesn't exist. ${file}.bak"
             continue
         fi
         SRC=${file}
