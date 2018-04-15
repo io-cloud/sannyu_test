@@ -36,13 +36,14 @@ grep -E '26/Feb/2018:20|26/Feb/2018:21|26/Feb/2018:22' dir_3/access_log | awk -F
 
 プログラミング  
 9.chk_zorome.<拡張子> を作成しなさい  
-※下記ファイル参照  
-chk_zorome.go  
+<pre>※下記ファイル参照
+chk_zorome.go</pre>
 
 10.リポジトリ内、bak.shのコードを読んで、次の問いに答えなさい  
-  1.テレコ  
-  ※下記ファイル参照  
-  bak_tereko.sh  
-  2.後続処理訂正  
-  ※下記ファイル参照   
-  bak_last.sh  
+(1)テレコ  
+<pre>※下記ファイル参照  
+bak_tereko.sh</pre>
+  
+(2)後続処理訂正  
+<pre>※下記ファイル参照
+bak_last.sh</pre>
