@@ -23,7 +23,7 @@ func main () {
     var arr []string
     arr = strings.Split(s, ",")
 
-    //要素ごとに判定ループ
+    //要素ごとに判定
     //他言語で使うゾロ目の正規表現"^([0-9])\1{2}$"が使えなかったので10通り並べた
     for i := range arr {
         re_3zorome := regexp.MustCompile(`^(000|111|222|333|444|555|666|777|888|999)$`)
