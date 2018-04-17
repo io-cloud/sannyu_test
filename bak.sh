@@ -1,5 +1,5 @@
 #!/bin/bash
- 
+
 function help {
     cat <<- EOF
     overview：backup or restore
@@ -18,12 +18,14 @@ do
         b)
           IS_RESTORE=0
             ;;
-        r) 
+        r)
           IS_RESTORE=1
             ;;
         h)
           help
             ;;
+        *)
+          exit 1
     esac
 done
 
@@ -31,7 +33,7 @@ shift $((OPTIND - 1))
 
 for file in $*
 do
-    if [ "$IS_RESTORE" -eq 0 ]; then
+    if [ "$IS_RESTORE" -eq 1 ]; then
         if [ ! -e "${file}.bak" ]; then
             echo "ERROR: A file doesn't exist. ${file}.bak"
             continue
@@ -46,7 +48,7 @@ do
         SRC=${file}
         DST=${file}.bak
     fi
-     
+
     echo -n "$SRC --> $DST  ...  "
     cp $SRC $DST &> /dev/null
     if [ "$?" -eq 0 ]
