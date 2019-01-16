@@ -7,4 +7,4 @@ io-cloudからの挑戦状
 5.curl
 6.tail -n 5 dir_1/*.log
 7.sed -i 's/hoge/fuga/g' dir_2/20180219*
-8.grep "26/Feb/2018:2[0-2]" dir_3/access.log
+8.grep "26/Feb/2018:2[0-2]" dir_3/access.log | wc -l
