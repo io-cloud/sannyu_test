@@ -29,9 +29,13 @@ done
 
 shift $((OPTIND - 1))
 
+if [ -z "$IS_RESTORE" ]; then
+    exit 1
+fi
+
 for file in $*
 do
-    if [ "$IS_RESTORE" -eq 0 ]; then
+    if [ "$IS_RESTORE" -eq 1 ]; then
         if [ ! -e "${file}.bak" ]; then
             echo "ERROR: A file doesn't exist. ${file}.bak"
             continue
