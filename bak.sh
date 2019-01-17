@@ -24,6 +24,9 @@ do
         h)
           help
             ;;
+        *)
+          break
+            ;;
     esac
 done
 
