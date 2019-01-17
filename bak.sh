@@ -16,13 +16,16 @@ while getopts brh OPT
 do
     case $OPT in
         b)
-          IS_RESTORE=0
+          IS_RESTORE=1
             ;;
         r) 
-          IS_RESTORE=1
+          IS_RESTORE=0
             ;;
         h)
           help
+            ;;
+        *)
+          break
             ;;
     esac
 done

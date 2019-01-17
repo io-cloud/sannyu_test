@@ -1,0 +1,10 @@
+io-cloudからの挑戦状
+
+1.uptime
+2.free
+3.ps
+4.stat
+5.curl
+6.tail -n 5 dir_1/*.log
+7.sed -i 's/hoge/fuga/g' dir_2/20180219*
+8.grep "26/Feb/2018:2[0-2]" dir_3/access.log | wc -l
