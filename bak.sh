@@ -24,6 +24,9 @@ do
         h)
           help
             ;;
+        ?)
+          echo "-b, -r, -h以外の引数が指定されたため、スクリプトを終了します。"
+          exit 1
     esac
 done
 
