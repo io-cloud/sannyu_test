@@ -1,5 +1,9 @@
 #! /bin/bash
+
 str=$1
+if test -p /dev/stdin ; then
+	str=`cat /dev/stdin`
+fi
 
 if test -n `echo $str | grep -E ','` ; then
 	strs=`echo $str | sed -e 's/,/\n/g'`
