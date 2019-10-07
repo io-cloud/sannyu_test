@@ -1,0 +1,12 @@
+1 uptime,top
+2 free -m, top
+3 pstree -p
+4 df -i
+5 curl -sLI www.google.com
+6 for file_path in `find ./ -name "*.log"` ; do tail -5 $file_path ; done
+7 for file_path in `find ./ -name "20180219*"` ; do sed -Ei 's/hoge/huga/g' $file_path ; done
+8 grep -E '26/Feb/2018:2[0-2]' access_log | awk '{print $1}' | sort | uniq
+せっかく数えるならuniq -c | sort -rとかしてUniqIP毎に集計とかしたくなります
+さらにどうせならtd-agent内のRubyでログ整形とかしてelasticsearchとかに貯めてkibanaで可視化とか…
+9 ./chk_zorome.shをご参照ください
+10 ./bak_kai.shのコミット履歴をご参照ください
