@@ -1,5 +1,4 @@
 7. `dir_2`ディレクトリにあるファイルの中からファイル名が20180219から始まるファイル内に含まれる文字列`hoge`を全て`fuga`に置換するコマンドを記載しなさい（可能であればワンライナー）
 ```
-for i in `ls dir_2/* | grep -E ^dir_2/20180219`; do sed -i -e 's|<li><a href="#">hog
-e</a></li>|<li><a href="#">fuga</a></li>|' $i; done
+for i in `ls dir_2/* | grep -E ^dir_2/20180219`; do sed -i -e 's|hoge|fuga|' $i; done
 ```
