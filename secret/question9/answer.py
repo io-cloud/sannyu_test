@@ -2,6 +2,7 @@
 
 import sys
 import re
+import traceback
 
 # python answer.py 123,abc,3333,555,321
 
@@ -33,6 +34,9 @@ def main(thgs):
             raise Exception("Program Not Working! thg: {thg}".format(thg=thg))
 
 if __name__ == '__main__':
-    del sys.argv[0]
-    targets = sys.argv[0].split(",")
-    main(targets)
+    try:
+        del sys.argv[0]
+        targets = sys.argv[0].split(",")
+        main(targets)
+    except:
+        traceback.print_exc()
