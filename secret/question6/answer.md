@@ -1,4 +1,4 @@
 6. `dir_1`ディレクトリにある拡張子logとなっているファイルに対して、ファイル毎に末尾5行分を表示させるコマンドを記載しなさい（可能であればワンライナー）
 ```
-for i in dir_1/*.log; do tail -n 5 $i && echo -e "\n"; done
+for i in dir_1/*.log; do echo $i && tail -n 5 $i && echo -e "\n"; done
 ```
