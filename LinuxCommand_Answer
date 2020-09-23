@@ -20,5 +20,5 @@ tail -n 5 dir_1/*.log
 sed -i -e s/hoge/fuga/g dir_2/20180219*
 
 8.dir_3ディレクトリにあるaccess_logから2018/2/26 20:00～22:59までのユニーク（送信元IP）なアクセス数を出力するコマンド
-
+grep -c "26/Feb/2018:2[0-2]" access_log | cut -d " " -f 1 | uniq -u
 
