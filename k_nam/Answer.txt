@@ -1,0 +1,281 @@
+
+https://github.com/io-cloud/sannyu_test
+
+#####################################################
+★1
+ロードアベレージを表示させるコマンドを記載しなさい
+⇒uptime及びTOPコマンドで確認可能
+
+[ec2-user@XXXX]$ uptime
+ 07:04:10 up 3 min,  1 user,  load average: 0.02, 0.04, 0.01
+#####################################################
+★2
+空きメモリサイズを表示させるコマンドを記載しなさい
+⇒top及びfreeコマンドで確認可能です
+
+[ec2-user@XXXX]$ free
+              total        used        free      shared  buff/cache   available
+Mem:        1006944      238572      518188         524      250184      630504
+Swap:             0           0           0
+
+#####################################################
+★3(修正)
+プロセスの親子関係及びプロセス番号を表示させるコマンドを記載しなさい
+⇒このように確認いたします
+①psコマンドで参照
+
+[ec2-user@XXXX~]$ ps -ef | grep php
+root         846       1  0 01:23 ?        00:00:00 php-fpm: master process (/etc/php-fpm.conf)
+apache       988     846  0 01:23 ?        00:00:00 php-fpm: pool www
+apache      1074     846  0 01:23 ?        00:00:00 php-fpm: pool www
+apache      1075     846  0 01:23 ?        00:00:00 php-fpm: pool www
+apache      1126     846  0 01:23 ?        00:00:00 php-fpm: pool www
+apache      1135     846  0 01:23 ?        00:00:00 php-fpm: pool www
+ec2-user    1809    1774  0 01:31 pts/0    00:00:00 grep --color=auto php
+
+[ec2-user@XXXX~]$ ps -ef | grep ph[p]
+root         846       1  0 01:23 ?        00:00:00 php-fpm: master process (/etc/php-fpm.conf)
+apache       988     846  0 01:23 ?        00:00:00 php-fpm: pool www
+apache      1074     846  0 01:23 ?        00:00:00 php-fpm: pool www
+apache      1075     846  0 01:23 ?        00:00:00 php-fpm: pool www
+apache      1126     846  0 01:23 ?        00:00:00 php-fpm: pool www
+apache      1135     846  0 01:23 ?        00:00:00 php-fpm: pool www
+
+
+②pstreeコマンドで参照
+[ec2-user@XXXX~]$ pstree -p  | grep php
+           |-php-fpm(846)-+-php-fpm(988)
+           |              |-php-fpm(1074)
+           |              |-php-fpm(1075)
+           |              |-php-fpm(1126)
+           |              `-php-fpm(1135)
+
+#####################################################
+★4
+iノードの使用率を表示させるコマンドを記載しなさい
+⇒df -i コマンドで確認可能です。
+[ec2-user@XXXX]$ df -i
+Filesystem      Inodes IUsed   IFree IUse% Mounted on
+devtmpfs        121308   284  121024    1% /dev
+tmpfs           125868     2  125866    1% /dev/shm
+tmpfs           125868   355  125513    1% /run
+tmpfs           125868    16  125852    1% /sys/fs/cgroup
+/dev/xvda1     4193216 50574 4142642    2% /
+tmpfs           125868     1  125867    1% /run/user/1000
+
+#####################################################
+★5(修正)
+httpリクエストを投げて、そのヘッダ情報のみを表示させるコマンドを記載しなさい
+⇒以下のコマンドで確認できます。
+curl -I http://www.google.com
+
+-X, —request <command>
+-I, —head
+
+メモ
+単純にリクエストのヘッダだけ欲しいのであれば、-I だけでOKです。                     
+-X HEAD は HEAD メソッド を URL に対して要求するため,予期せぬ結果を返される恐れがあります。（アクセス先の URL が HEAD メソッド を受け付けていない場合、エラーになることも。。）
+
+#####################################################
+★6(修正)
+dir_1ディレクトリにある拡張子logとなっているファイルに対して、ファイル毎に末尾5行分を表示させるコマンドを記載しなさい（可能であればワンライナー）
+⇒以下のコマンドで対応可能です。
+find . -maxdepth 1 -name "*.log"  | xargs tail -n 5
+
+
+[ec2-user@XXXX]$ ls -lR
+.:
+total 56
+-rw-rw-r--. 1 ec2-user ec2-user 7314 Nov 12 00:32 httpd_access.20180222.json
+-rw-rw-r--. 1 ec2-user ec2-user 7485 Nov 12 00:32 httpd_access.20180223.json
+-rw-rw-r--. 1 ec2-user ec2-user 6377 Nov 12 00:32 httpd_access.20180223.log
+-rw-rw-r--. 1 ec2-user ec2-user 8035 Nov 12 00:32 httpd_access.20180224.json
+-rw-rw-r--. 1 ec2-user ec2-user 6723 Nov 12 00:32 httpd_access.20180224.log
+-rw-rw-r--. 1 ec2-user ec2-user 6782 Nov 12 00:32 httpd_access.20180225.log
+-rw-rw-r--. 1 ec2-user ec2-user 6318 Nov 12 00:32 httpd_access.20180226.log
+drwxrwxr-x. 2 ec2-user ec2-user   39 Nov 16 01:37 sub
+
+./sub:
+total 8
+-rw-rw-r--. 1 ec2-user ec2-user 6782 Nov 12 00:32 httpd_access.20180225.log
+
+
+
+[ec2-user@XXXX]$ find . -maxdepth 1 -name "*.log"  | xargs tail -n 5
+==> ./httpd_access.20180223.log <==
+140.111.44.116 - - [26/Feb/2018:23:06:29 +0900] "GET /item/networking/862 HTTP/1.1" 200 117 "/item/finance/1025" "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; YTB730; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)"
+32.213.147.52 - - [26/Feb/2018:23:06:29 +0900] "GET /category/software HTTP/1.1" 200 136 "-" "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11"
+152.84.32.58 - - [26/Feb/2018:23:06:29 +0900] "GET /category/games HTTP/1.1" 200 86 "/category/health" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.1) Gecko/20100101 Firefox/10.0.1"
+72.123.171.178 - - [26/Feb/2018:23:06:29 +0900] "GET /category/garden HTTP/1.1" 200 134 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.1) Gecko/20100101 Firefox/10.0.1"
+148.165.183.68 - - [26/Feb/2018:23:06:29 +0900] "GET /category/electronics HTTP/1.1" 200 119 "-" "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"
+
+==> ./httpd_access.20180224.log <==
+84.78.176.65 - - [26/Feb/2018:23:06:22 +0900] "GET /category/electronics HTTP/1.1" 200 43 "/category/cameras" "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; YTB730; GTB7.2; EasyBits GO v1.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)"
+224.87.173.72 - - [26/Feb/2018:23:06:22 +0900] "GET /category/computers HTTP/1.1" 200 86 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:9.0.1) Gecko/20100101 Firefox/9.0.1"
+36.171.73.62 - - [26/Feb/2018:23:06:22 +0900] "GET /category/music HTTP/1.1" 200 83 "-" "Mozilla/5.0 (Windows NT 6.0; rv:10.0.1) Gecko/20100101 Firefox/10.0.1"
+104.75.79.195 - - [26/Feb/2018:23:06:22 +0900] "GET /item/electronics/1560 HTTP/1.1" 200 63 "/item/health/2462" "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; GTB7.2; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)"
+200.156.126.143 - - [26/Feb/2018:23:06:22 +0900] "GET /category/finance HTTP/1.1" 200 128 "/category/software?from=0" "Mozilla/5.0 (Windows NT 6.0; rv:10.0.1) Gecko/20100101 Firefox/10.0.1"
+
+==> ./httpd_access.20180225.log <==
+68.138.24.106 - - [26/Feb/2018:23:06:14 +0900] "POST /search/?c=Games+Electronics HTTP/1.1" 200 103 "/category/software" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.77 Safari/535.7"
+168.165.65.99 - - [26/Feb/2018:23:06:14 +0900] "GET /item/games/2606 HTTP/1.1" 200 84 "http://www.google.com/search?ie=UTF-8&q=google&sclient=psy-ab&q=Games&oq=Games&aq=f&aqi=g-vL1&aql=&pbx=1&bav=on.2,or.r_gc.r_pw.r_qf.,cf.osb&biw=1531&bih=415" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.77 Safari/535.7"
+20.141.53.179 - - [26/Feb/2018:23:06:14 +0900] "GET /item/networking/4815 HTTP/1.1" 200 110 "/item/office/3542" "Mozilla/5.0 (iPad; CPU OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3"
+120.225.189.210 - - [26/Feb/2018:23:06:14 +0900] "GET /item/jewelry/654 HTTP/1.1" 200 50 "/item/electronics/632" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+156.60.199.20 - - [26/Feb/2018:23:06:14 +0900] "GET /item/books/1388 HTTP/1.1" 200 88 "/item/books/4395" "Mozilla/5.0 (Windows NT 6.0; rv:10.0.1) Gecko/20100101 Firefox/10.0.1"
+
+==> ./httpd_access.20180226.log <==
+36.216.23.159 - - [26/Feb/2018:23:05:08 +0900] "GET /category/electronics HTTP/1.1" 200 53 "/category/finance" "Mozilla/5.0 (Windows NT 6.0; rv:10.0.1) Gecko/20100101 Firefox/10.0.1"
+48.54.125.111 - - [26/Feb/2018:23:05:08 +0900] "GET /item/electronics/3972 HTTP/1.1" 200 134 "/item/software/4445" "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)"
+56.33.58.35 - - [26/Feb/2018:23:05:08 +0900] "GET /category/games HTTP/1.1" 200 90 "-" "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; GTB7.2; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)"
+140.189.64.220 - - [26/Feb/2018:23:05:08 +0900] "GET /category/electronics?from=0 HTTP/1.1" 200 110 "/category/electronics" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.77 Safari/535.7"
+212.102.188.49 - - [26/Feb/2018:23:05:08 +0900] "GET /category/office HTTP/1.1" 200 59 "-" "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; YTB730; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)"
+
+
+#####################################################
+★7
+dir_2ディレクトリにあるファイルの中からファイル名が20180219から始まるファイル内に含まれる文字列hogeを全てfugaに置換するコマンドを記載しなさい（可能であればワンライナー）
+⇒find . -name "20180219*"  -exec sed -i 's/hoge/fuga/g' {} \;で対応可能
+
+
+[ec2-user@XXXX]$ find . -name "20180219*"  -exec cat {} \; | grep hoge
+    <li><a href="#">hoge</a></li>
+    <li><a href="#nowhere" title="Praesent dapibus, neque id hoge faucibus">Praesent</a></li>
+   <dt>Lorem ipsum dolor sit hoge</dt>
+commodo hoge.</dd>
+[ec2-user@XXXX]$ find . -name "20180219*"  -exec sed -i 's/hoge/fuga/g' {} \;
+[ec2-user@XXXX]$ find . -name "20180219*"  -exec cat {} \; | grep hoge
+[ec2-user@XXXX]$ find . -name "20180219*"  -exec cat {} \; | grep fuga
+    <li><a href="#">fuga</a></li>
+    <li><a href="#nowhere" title="Praesent dapibus, neque id fuga faucibus">Praesent</a></li>
+   <dt>Lorem ipsum dolor sit fuga</dt>
+commodo fuga.</dd>
+
+
+#####################################################
+★8(修正)
+dir_3ディレクトリにあるaccess_logから2018/2/26 20:00～22:59までのユニーク（送信元IP）なアクセス数を出力するコマンドを記載しなさい（可能であればワンライナー）
+⇒以下のように確認可能
+
+[ec2-user@XXXX]$ cat access_log  | grep "26/Feb/2018:2[0-2]:[0-9][0-9]:[0-9][0-9]" | awk '{print $1}' 
+60.138.64.193 - - [26/Feb/2018:20:00:00 +0900] "GET /category/finance HTTP/1.1" 200 80 "/item/games/4390" "Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3"
+80.144.28.94 - - [26/Feb/2018:20:20:32 +0900] "GET /category/finance HTTP/1.1" 200 59 "-" "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; GTB7.2; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)"
+128.45.218.184 - - [26/Feb/2018:20:28:38 +0900] "GET /item/music/3145 HTTP/1.1" 200 68 "/category/books" "Mozilla/5.0 (Windows NT 6.0; rv:10.0.1) Gecko/20100101 Firefox/10.0.1"
+20.186.31.202 - - [26/Feb/2018:21:11:32 +0900] "GET /category/games HTTP/1.1" 200 80 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.77 Safari/535.7"
+124.225.146.28 - - [26/Feb/2018:22:00:00 +0900] "POST /search/?c=Software+Software HTTP/1.1" 200 58 "/item/giftcards/335" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.77 Safari/535.7"
+168.81.179.116 - - [26/Feb/2018:22:59:59 +0900] "GET /category/books HTTP/1.1" 200 44 "-" "Mozilla/5.0 (Windows NT 6.0; rv:10.0.1) Gecko/20100101 Firefox/10.0.1"
+
+[ec2-user@XXXX]$ cat access_log  | grep "26/Feb/2018:2[0-2]:[0-9][0-9]:[0-9][0-9]" | awk '{print $1}'  | sort
+124.225.146.28
+128.45.218.184
+168.81.179.116
+20.186.31.202
+60.138.64.193
+80.144.28.94
+
+
+[ec2-user@XXXX]$ echo "60.138.64.193 - - [26/Feb/2018:20:00:00 +0900] \"GET /category/finance HTTP/1.1\" 200 80 \"/item/games/4390\" \"Mozill
+a/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3\"" >> access_log
+
+
+[ec2-user@XXXX]$ cat access_log  | grep "26/Feb/2018:2[0-2]:[0-9][0-9]:[0-9][0-9]" | awk '{print $1}'  | sort
+124.225.146.28
+128.45.218.184
+168.81.179.116
+20.186.31.202
+60.138.64.193
+60.138.64.193
+80.144.28.94
+
+
+[ec2-user@XXXX]$ cat access_log  | grep "26/Feb/2018:2[0-2]:[0-9][0-9]:[0-9][0-9]" | awk '{print $1}'  | sort | uniq
+124.225.146.28
+128.45.218.184
+168.81.179.116
+20.186.31.202
+60.138.64.193
+80.144.28.94
+
+
+#####################################################
+★9(修正)
+chk_zorome.pyを作り直しました
+
+⇒以下は実行結果
+
+##############################################
+入力：111,123,1234,ska
+1234
+zorome: 111
+unzoromemach pattern: 123, ska
+
+
+#####################################################
+★10
+bak-workを作りました
+
+⇒bak.shは、コードの一部が誤っており、実行すると意図した通りに動作しない。 どうやら-bと-rで、オプション使用時の挙動がテレコになっている様だ。 
+　 誤っている部分を修正しなさい
+
+⇒第一引数に、-b, -r, -h以外が指定された場合においても後続処理が実行されてしまっている様だ。
+ 想定外の引数が指定された場合にスクリプトを終了させる処理を実装しなさい
+
+
+【Diff結果】
+[ec2-user@XXXX]$ diff bak.sh  bak-1.sh
+18c18
+<         b)
+---
+>         r)
+21c21
+<         r)
+---
+>         b)
+26a27,30
+>       *)
+>           echo "引数指定が間違っています。以下の引数から一つを選んでください"
+>         help
+>           ;;
+
+
+
+【テスト①ー 挙動がテレコ修正】
+
+[ec2-user@XXXX]$ ls -l
+total 16
+-rw-rw-r-- 1 ec2-user ec2-user    0 Nov 11 07:59 123.txt
+-rwxr-xr-x 1 ec2-user ec2-user 1160 Nov 11 08:10 bak-1.sh
+-rwxr-xr-x 1 ec2-user ec2-user 1031 Apr 17  2018 bak.sh
+drwxrwxr-x 2 ec2-user ec2-user  240 Apr 17  2018 dir_1
+drwxrwxr-x 2 ec2-user ec2-user  204 Nov 11 07:39 dir_2
+drwxrwxr-x 2 ec2-user ec2-user   24 Apr 17  2018 dir_3
+-rw-rw-r-- 1 ec2-user ec2-user 4208 Apr 17  2018 README.md
+[ec2-user@XXXX]$ sh bak-1.sh -b 123.txt
+123.txt --> 123.txt.bak  ...  OK
+[ec2-user@XXXX]$ cat 123.txt
+[ec2-user@XXXX]$
+[ec2-user@XXXX]$ echo 222 >> 123.txt
+[ec2-user@XXXX]$ cat 123.txt
+222
+[ec2-user@XXXX]$
+[ec2-user@XXXX]$
+[ec2-user@XXXX]$ sh bak-1.sh -r 123.txt
+123.txt.bak --> 123.txt  ...  OK
+[ec2-user@XXXX]$
+[ec2-user@XXXX]$ cat 123.txt
+[ec2-user@XXXX]$
+
+
+
+
+【テスト②ー -b, -r, -h以外が指定された場合】
+[ec2-user@XXXX]$ sh bak-1.sh -o 123.txt
+bak-1.sh: illegal option -- o
+引数指定が間違っています。以下の引数から一つを選んでください
+    overview：backup or restore
+    usage：bak.sh [-h|-b|-r] filename ...
+    option：
+      -h  this message
+      -b  backup
+      -r  restore
+[ec2-user@XXXX]$ echo $?
+1
