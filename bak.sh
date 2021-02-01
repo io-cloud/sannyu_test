@@ -24,6 +24,10 @@ do
         h)
           help
             ;;
+        *)
+          echo "ERROR: This option doesn't exist."
+          help
+          exit 1
     esac
 done
 
