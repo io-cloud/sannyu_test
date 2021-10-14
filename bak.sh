@@ -24,6 +24,10 @@ do
         h)
           help
             ;;
+	*)
+ 	  echo "定義されていないオプションです（OPT=$OPT）"
+ 	  exit
+  	  ;;
     esac
 done
 
