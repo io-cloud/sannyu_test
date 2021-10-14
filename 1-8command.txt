@@ -5,4 +5,5 @@
 ５、curl --head https://udemy20210512.com/
 ６、tail -n 5 dir_1/*.log
 ７、sed -e s/hoge/fuga/g /dir_2/20180219*
-８、cat /dir_3/access_log | grep -e 26/Feb/2018:20 -e 26/Feb/2018:21 -e 26/Feb/2018:22
+８、cat /c/Users/syohei/sannyu_test/dir_3/access_log | grep -e 26/Feb/2018:20 -e 26/Feb/2018:21 -e 26/Feb/2018:22 | uniq | wc -l
+

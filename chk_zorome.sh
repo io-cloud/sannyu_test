@@ -23,10 +23,10 @@ echo "$S" > /dev/null ;
         echo "zorome: $S "
 
     elif [[ "$S" =~ [^0-9] ]]; then
-        echo "umach patten: $S"
+        echo "unmatch pattern: $S"
 
     elif [ $S -gt 1000 ] ||[ $S -lt 99 ]; then
-        echo "umach patten: $S"
+        echo "unmatch pattern: $S"
 
     else
         echo "$S"
