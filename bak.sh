@@ -24,6 +24,9 @@ do
         h)
           help
             ;;
+        *)
+          echo "This command does not exist."
+            ;;
     esac
 done
 
@@ -31,7 +34,7 @@ shift $((OPTIND - 1))
 
 for file in $*
 do
-    if [ "$IS_RESTORE" -eq 0 ]; then
+    if [ "$IS_RESTORE" -eq 1 ]; then
         if [ ! -e "${file}.bak" ]; then
             echo "ERROR: A file doesn't exist. ${file}.bak"
             continue
