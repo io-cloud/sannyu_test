@@ -24,6 +24,9 @@ do
         h)
           help
             ;;
+        *)
+          echo "This command does not exist."
+            ;;
     esac
 done
 
