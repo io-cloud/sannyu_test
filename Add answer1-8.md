@@ -20,4 +20,4 @@ tail -n 5 *.log
 sed -e "s/hoge/fuga/g" dir_2/20180219*
 
 8.dir_3ディレクトリにあるaccess_logから2018/2/26 20:00～22:59までのユニーク（送信元IP）なアクセス数を出力するコマンド
-awk '"[26/Feb/2018:20:00:00" < $4 && $4 <= "[26/Feb/2018:22:59:59"' dir_3/access_log | awk '{print $1}' | sort | uniq | wc -l
+grep 26/Feb/2018:2[0-2] test.log | awk '{print $1}' | sort | uniq | wc -l
