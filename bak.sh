@@ -39,12 +39,14 @@ do
         SRC=${file}.bak
         DST=${file}
     else
+    if [ "$IS_RESTORE" -eq 0 ]; then
         if [ ! -e "${file}" ]; then
             echo "ERROR: A file doesn't exist. ${file}"
             continue
         fi
         SRC=${file}
         DST=${file}.bak
+      fi
     fi
     echo -n "$SRC --> $DST  ...  "
     cp $SRC $DST &> /dev/null
