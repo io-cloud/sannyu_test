@@ -18,7 +18,7 @@ do
         b)
           IS_RESTORE=0
             ;;
-        r) 
+        r)
           IS_RESTORE=1
             ;;
         h)
@@ -49,9 +49,6 @@ do
         SRC=${file}.bak
         DST=${file}
     fi
-
-
-
     echo -n "$SRC --> $DST  ...  "
     cp $SRC $DST &> /dev/null
     if [ "$?" -eq 0 ]
