@@ -11,13 +11,13 @@ pstree -p
 df -i
 
 5.httpリクエストを投げて、そのヘッダ情報のみを表示させるコマンド
-curl -v
+curl --head
 
 6.拡張子logとなっているファイルに対して、ファイル毎に末尾5行分を表示させるコマンド
-tail -n 5 *.log
+tail -n 5 dir_1/*.log
 
 7.dir_2ディレクトリにあるファイルの中からファイル名が20180219から始まるファイル内に含まれる文字列hogeを全てfugaに置換するコマンドを記載
 sed -e "s/hoge/fuga/g" dir_2/20180219*
 
 8.dir_3ディレクトリにあるaccess_logから2018/2/26 20:00～22:59までのユニーク（送信元IP）なアクセス数を出力するコマンド
-grep 26/Feb/2018:2[0-2] test.log | awk '{print $1}' | sort | uniq | wc -l
+grep 26/Feb/2018:2[0-2]  dir_3/access_log | awk '{print $1}' | sort | uniq | wc -l
