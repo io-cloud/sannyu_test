@@ -16,10 +16,10 @@ while getopts brh OPT
 do
     case $OPT in
         b)
-          IS_RESTORE=0
+          IS_RESTORE=1
             ;;
         r) 
-          IS_RESTORE=1
+          IS_RESTORE=0
             ;;
         h)
           help
@@ -28,6 +28,7 @@ do
 done
 
 shift $((OPTIND - 1))
+test "$IS_RESTORE" = "" && exit 1
 
 for file in $*
 do
