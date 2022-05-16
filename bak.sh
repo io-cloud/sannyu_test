@@ -28,6 +28,7 @@ do
 done
 
 shift $((OPTIND - 1))
+test "$IS_RESTORE" = "" && exit 1
 
 for file in $*
 do
