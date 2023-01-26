@@ -31,6 +31,10 @@ shift $((OPTIND - 1))
 
 for file in $*
 do
+    # 指定された引数でなければ強制的に処理を終了
+    if [ "$IS_RESTORE" -ne 0 ] && [ "$IS_RESTORE" -ne 1 ] ; then
+        
+    
     # 35行目の条件式を書き換える
     ##if [ "$IS_RESTORE" -eq 0 ]; then
     if [ "$IS_RESTORE" -eq 1 ]; then
